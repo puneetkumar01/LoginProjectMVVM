@@ -1,10 +1,14 @@
 package e.skycap.myapplication.ViewModel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import e.skycap.myapplication.BR;
 import e.skycap.myapplication.Model.User;
+import e.skycap.myapplication.View.MainActivity;
+import e.skycap.myapplication.View.PostListActivity;
 
 
 public class LoginViewModel extends BaseObservable{
@@ -19,10 +23,16 @@ private String errorMessagblankeemail = "Enter the Email ";
 private String errorMessageblankpassword = "Email the Password";
 
 
+    Context con;
+
+    public LoginViewModel(Context context){
+        user=new User("","");
+        this.con = context;
+    }
 
 
 
-@Bindable
+    @Bindable
 public String toastMessage = null;
 
     public String getToastMessage() {
@@ -35,9 +45,7 @@ public String toastMessage = null;
 
     }
 
-public LoginViewModel(){
-        user=new User("","");
-}
+
 
 public void afterEmailTextChanged(CharSequence s){
        user.setEmail(s.toString());
@@ -70,6 +78,9 @@ int errorcode=user.isInputDataValid();
         }
         else{
             setToastMessage(successMessage);
+
+            Intent login = new Intent(con, PostListActivity.class);
+            con.startActivity(login);
         }
 }
 
